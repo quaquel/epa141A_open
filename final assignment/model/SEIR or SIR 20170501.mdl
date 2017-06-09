@@ -1,0 +1,232 @@
+{UTF-8}
+Average incubation time=
+	2
+	~	Day
+	~		|
+
+Average infectious period=
+	14
+	~	Day
+	~		|
+
+Basic reproduction number=
+	2
+	~	Dmnl
+	~		|
+
+Case fatality rate=
+	0.01
+	~	Dmnl
+	~		|
+
+Deceased population= INTEG (
+	Dying,
+		Initial deceased population)
+	~	Person
+	~		|
+
+Dying=
+	Case fatality rate * Infectious population / Average infectious period
+	~	Person/Day
+	~		|
+
+Exposed population= INTEG (
+	Infecting-Incubation,
+		Initial exposed population)
+	~	Person
+	~		|
+
+Fraction susceptible population=
+	Susceptible population / Total population
+	~	Dmnl
+	~		|
+
+Incubation=
+	IF THEN ELSE ( Switch SEIR or SIR = 1 , Exposed population / Average incubation time\
+		 , Infecting )
+	~	Person/Day
+	~		|
+
+Infecting=
+	Infectious population * Basic reproduction number * Fraction susceptible population \
+		/ Average infectious period
+	~	Person/Day
+	~		|
+
+Infectious population= INTEG (
+	Incubation-Dying-Surviving,
+		Initial infectious population)
+	~	Person
+	~		|
+
+Initial deceased population=
+	0
+	~	Person
+	~		|
+
+Initial exposed population=
+	0
+	~	Person
+	~		|
+
+Initial infectious population=
+	1
+	~	Person
+	~		|
+
+Initial recovered population=
+	0
+	~	Person
+	~		|
+
+Initial susceptible population=
+	100000
+	~	Person
+	~		|
+
+Recovered population= INTEG (
+	Surviving,
+		Initial recovered population)
+	~	Person
+	~		|
+
+Surviving=
+	( 1 - Case fatality rate ) * Infectious population / Average infectious period
+	~	Person/Day
+	~		|
+
+Susceptible population= INTEG (
+	-Infecting,
+		Initial susceptible population)
+	~	Person
+	~		|
+
+Switch SEIR or SIR=
+	0
+	~	Dmnl [1,1,2]
+	~	1 = SEIR, ELSE = SIR
+	|
+
+Total population=
+	Susceptible population + Exposed population + Infectious population + Recovered population
+	~	Person
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 360
+	~	Day
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Day
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP 
+	~	Day [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Day [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Arial|12||0-0-0|0-0-0|0-166-214|-1--1--1|-1--1--1|96,96,100,0
+10,1,Susceptible population,109,452,43,20,3,131,0,0,0,0,0,0
+10,2,Exposed population,354,452,40,20,3,131,0,0,0,0,0,0
+10,3,Infectious population,602,452,40,20,3,3,0,0,0,0,0,0
+10,4,Recovered population,850,452,40,20,3,3,0,0,0,0,0,0
+10,5,Deceased population,602,273,40,20,3,3,0,0,0,0,0,0
+1,6,8,2,4,0,0,22,0,0,0,-1--1--1,,1|(275,452)|
+1,7,8,1,100,0,0,22,0,0,0,-1--1--1,,1|(188,452)|
+11,8,0,230,452,6,8,34,3,0,0,1,0,0,0
+10,9,Infecting,230,471,31,10,40,3,0,0,-1,0,0,0
+1,10,12,3,4,0,0,22,0,0,0,-1--1--1,,1|(523,452)|
+1,11,12,2,100,0,0,22,0,0,0,-1--1--1,,1|(433,452)|
+11,12,0,478,452,6,8,34,3,0,0,1,0,0,0
+10,13,Incubation,478,471,37,10,40,3,0,0,-1,0,0,0
+1,14,16,5,4,0,0,22,0,0,0,-1--1--1,,1|(602,324)|
+1,15,16,3,100,0,0,22,0,0,0,-1--1--1,,1|(602,400)|
+11,16,0,602,362,8,6,33,3,0,0,4,0,0,0
+10,17,Dying,630,362,22,10,40,3,0,0,-1,0,0,0
+1,18,20,4,4,0,0,22,0,0,0,-1--1--1,,1|(771,452)|
+1,19,20,3,100,0,0,22,0,0,0,-1--1--1,,1|(681,452)|
+11,20,0,726,452,6,8,34,3,0,0,1,0,0,0
+10,21,Surviving,726,471,34,10,40,3,0,0,-1,0,0,0
+10,22,Initial susceptible population,106,401,65,19,8,3,0,18,0,0,0,0,0-0-0,0-0-0,|0|I|107-134-137
+10,23,Initial exposed population,354,405,55,19,8,3,0,18,0,0,0,0,0-0-0,0-0-0,|0|I|107-134-137
+10,24,Initial infectious population,602,496,58,19,8,3,0,18,0,0,0,0,0-0-0,0-0-0,|0|I|107-134-137
+10,25,Initial deceased population,602,229,59,19,8,3,0,18,0,0,0,0,0-0-0,0-0-0,|0|I|107-134-137
+10,26,Initial recovered population,850,406,60,19,8,3,0,18,0,0,0,0,0-0-0,0-0-0,|0|I|107-134-137
+1,27,22,1,0,0,0,0,0,64,1,-1--1--1,,1|(107,419)|
+1,28,23,2,0,0,0,0,0,64,1,-1--1--1,,1|(354,421)|
+1,29,24,3,0,0,0,0,0,64,1,-1--1--1,,1|(602,481)|
+1,30,26,4,0,0,0,0,0,64,1,-1--1--1,,1|(850,421)|
+1,31,25,5,0,0,0,0,0,64,1,-1--1--1,,1|(602,243)|
+10,32,Total population,493,675,57,10,8,3,0,0,0,0,0,0
+10,33,Switch SEIR or SIR,465,382,46,18,8,3,0,6,0,0,0,0,-1--1--1,165-202-26,|0||255-255-255
+10,34,Fraction susceptible population,202,574,42,27,8,3,0,0,0,0,0,0
+1,35,32,34,1,0,0,0,0,64,0,-1--1--1,,1|(321,662)|
+1,36,1,32,1,0,0,0,0,64,0,-1--1--1,,1|(185,650)|
+1,37,2,32,0,0,0,0,0,64,0,-1--1--1,,1|(422,562)|
+1,38,3,32,0,0,0,0,0,64,0,-1--1--1,,1|(548,562)|
+1,39,4,32,0,0,0,0,0,64,0,-1--1--1,,1|(669,564)|
+1,40,1,34,1,0,0,0,0,64,0,-1--1--1,,1|(151,519)|
+1,41,34,9,1,0,0,0,0,64,0,-1--1--1,,1|(231,511)|
+1,42,3,17,1,0,0,0,0,64,0,-1--1--1,,1|(650,404)|
+1,43,3,21,1,0,0,0,0,64,0,-1--1--1,,1|(680,494)|
+10,44,Case fatality rate,763,311,47,19,8,3,0,18,0,0,0,0,0-0-0,0-0-0,|0|I|109-23-127
+1,45,44,17,0,0,0,0,0,64,0,-1--1--1,,1|(690,338)|
+1,46,44,21,0,0,0,0,0,64,0,-1--1--1,,1|(745,388)|
+10,47,Basic reproduction number,187,305,70,19,8,3,0,18,0,0,0,0,0-0-0,0-0-0,|0|I|109-23-127
+1,48,47,9,1,0,0,0,0,64,0,-1--1--1,,1|(196,381)|
+10,49,Average infectious period,805,262,62,19,8,3,0,16,0,0,0,0,0-0-0,0-0-0,|0|I|0-0-0
+10,50,Average incubation time,482,550,58,19,8,3,0,16,0,0,0,0,0-0-0,0-0-0,|0|I|0-0-0
+1,51,50,13,0,0,0,0,0,64,0,-1--1--1,,1|(480,512)|
+1,52,2,13,1,0,0,0,0,64,0,-1--1--1,,1|(402,478)|
+1,53,49,17,1,0,0,0,0,64,0,-1--1--1,,1|(675,298)|
+1,54,49,21,1,0,0,0,0,64,0,-1--1--1,,1|(817,347)|
+1,55,49,9,1,0,0,0,0,64,0,-1--1--1,,1|(481,168)|
+1,56,3,9,1,0,0,0,0,64,0,-1--1--1,,1|(462,347)|
+1,57,33,13,1,0,0,0,0,64,0,-1--1--1,,1|(457,417)|
+1,58,9,13,1,0,0,0,0,64,0,-1--1--1,,1|(330,521)|
+///---\\\
+:L<%^E!@
+1:SIR.vdf
+1:SEIR.vdf
+9:SIR
+22:$,Dollar,Dollars,$s
+22:Hour,Hours
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:Week,Weeks
+22:Year,Years
+22:Day,Days
+15:0,0,0,1,0,0
+19:100,0
+27:2,
+34:0,
+4:Time
+5:Infectious population
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:4
+41:0
+24:0
+25:360
+26:360
