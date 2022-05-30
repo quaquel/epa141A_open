@@ -20,7 +20,7 @@ if __name__ == '__main__':
     # Build a user-defined scenario and policy:
     reference_values = {'Bmax': 175, 'Brate': 1.5, 'pfail': 0.5,
                         'ID flood wave shape': 4, 'planning steps': 2}
-    reference_values.update({'discount rate {}'.format(n): 3.5 for n in planning_steps})
+    reference_values.update({f'discount rate {n}': 3.5 for n in planning_steps})
     scen1 = {}
 
     for key in dike_model.uncertainties:
@@ -36,8 +36,8 @@ if __name__ == '__main__':
 
     # no dike increase, no warning, none of the rfr
     zero_policy = {'DaysToThreat': 0}
-    zero_policy.update({'DikeIncrease {}'.format(n): 0 for n in planning_steps})
-    zero_policy.update({'RfR {}'.format(n): 0 for n in planning_steps})
+    zero_policy.update({f'DikeIncrease {n}': 0 for n in planning_steps})
+    zero_policy.update({f'RfR {n}': 0 for n in planning_steps})
     pol0 = {}
 
     for key in dike_model.levers:

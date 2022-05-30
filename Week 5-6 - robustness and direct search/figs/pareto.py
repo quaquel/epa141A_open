@@ -136,7 +136,7 @@ def intrange(arg):
     partial = []
     first = None
 
-    msg = "Could not convert {0} to index range.".format(arg)
+    msg = f"Could not convert {arg} to index range."
     err = TypeError(msg)
 
     for char in arg:
@@ -488,7 +488,7 @@ def eps_sort_solutions(tables, epsilons=None):
     if epsilons is None:
         epsilons = [1e-9] * len(objectives)
     elif len(epsilons) != nobj:
-        msg = "{0} epsilons, but {1} objectives".format(len(epsilons), nobj)
+        msg = f"{len(epsilons)} epsilons, but {nobj} objectives"
         raise SortParameterError(msg)
 
     archive = Archive(epsilons)
