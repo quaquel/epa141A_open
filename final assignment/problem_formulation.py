@@ -36,7 +36,7 @@ def get_model_for_problem_formulation(problem_formulation_id):
     dike_lev = {'DikeIncrease': [0, 10]}    # dm
 
     # Series of five Room for the River projects:
-    rfr_lev = ['{}_RfR'.format(project_id) for project_id in range(0, 5)]
+    rfr_lev = ['{}_RfR'.format(project_id) for project_id in range(0, 5)] 
 
     # Time of warning: 0, 1, 2, 3, 4 days ahead from the flood
     EWS_lev = {'EWS_DaysToThreat': [0, 4]}  # days
