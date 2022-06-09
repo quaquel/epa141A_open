@@ -46,10 +46,10 @@ def get_network(plann_steps_max=10):
     for n in steps:
         a = to_dict_dropna(projects)
         
-        G.add_node('RfR_projects {}'.format(n), **a)
-        G.nodes['RfR_projects {}'.format(n)]['type'] = 'measure'
+        G.add_node(f'RfR_projects {n}', **a)
+        G.nodes[f'RfR_projects {n}']['type'] = 'measure'
 
-        G.add_node('discount rate {}'.format(n), **{'value': 0})
+        G.add_node(f'discount rate {n}', **{'value': 0})
 
     # Upload evacuation policies:
     G.add_node('EWS', **pd.read_excel('./data/EWS.xlsx').to_dict())
@@ -73,11 +73,11 @@ def get_network(plann_steps_max=10):
         G.nodes[dike]['dikelevel'] = Lookuplin(G.nodes[dike]['f'], 1, 0, 0.5)
 
         # Assign stage-discharge relationships
-        filename = './data/rating_curves/{}_ratingcurve_new.txt'.format(dike)
+        filename = f'./data/rating_curves/{dike}_ratingcurve_new.txt'
         G.nodes[dike]['r'] = np.loadtxt(filename)
 
         # Assign losses per location:
-        name = './data/losses_tables/{}_lossestable.xlsx'.format(dike)
+        name = f'./data/losses_tables/{dike}_lossestable.xlsx'
         G.nodes[dike]['table'] = pd.read_excel(name, index_col=0).values
 
         # Assign Muskingum paramters:
