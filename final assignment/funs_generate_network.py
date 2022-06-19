@@ -73,8 +73,9 @@ def get_network(plann_steps_max=10):
         G.nodes[dike]['dikelevel'] = Lookuplin(G.nodes[dike]['f'], 1, 0, 0.5)
 
         # Assign stage-discharge relationships
-        filename = f'./data/rating_curves/{dike}_ratingcurve_new.txt'
-        G.nodes[dike]['r'] = np.loadtxt(filename)
+        filename = f'./data/rating_curves/{dike}_ratingcurve_new.txt'   # Load file
+        rc_array = np.loadtxt(filename)                                 # Load file into array
+        G.nodes[dike]['r'] = rc_array[rc_array[:,0].argsort()]          # Sort on first column before saving
 
         # Assign losses per location:
         name = f'./data/losses_tables/{dike}_lossestable.xlsx'
