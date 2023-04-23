@@ -1,7 +1,3 @@
-from __future__ import (unicode_literals, print_function, absolute_import,
-                        division)
-
-
 from ema_workbench import (Model, MultiprocessingEvaluator, Policy,
                            Scenario)
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Tue Oct 31 13:18:05 2017
 
@@ -23,12 +22,12 @@ def Muskingum(C1, C2, C3, Qn0_t1, Qn0_t0, Qn1_t0):
     return Qn1_t1
 
 
-class DikeNetwork(object):
+class DikeNetwork:
     def __init__(self):
         # planning steps
         self.num_planning_steps = 3
         self.num_events = 30
-        
+
         # load network
         G, dike_list, dike_branch, planning_steps = funs_generate_network.get_network(
                                                             self.num_planning_steps)
@@ -87,8 +86,8 @@ class DikeNetwork(object):
             G.nodes[f'RfR_projects {s}']['cost'] = 0
         return G
 
-    def progressive_height_and_costs(self, G, dikenodes, steps):  
-        for dike in dikenodes:             
+    def progressive_height_and_costs(self, G, dikenodes, steps):
+        for dike in dikenodes:
             node = G.nodes[dike]
             # Rescale according to step and tranform in meters
             for s in steps:
@@ -97,13 +96,13 @@ class DikeNetwork(object):
                 # 2 Shift it to the degree of dike heigthening:
                 # 3 Calculate cumulative raising
 
-                node['fnew {}'.format(s)] = copy.deepcopy(node['f'])
-                node['dikeh_cum {}'.format(s)] = 0
-                
+                node[f'fnew {s}'] = copy.deepcopy(node['f'])
+                node[f'dikeh_cum {s}'] = 0
+
                 for ss in steps[steps <= s]:
-                    node[f'fnew {s}'][:, 0] += node[f'DikeIncrease {ss}']                 
+                    node[f'fnew {s}'][:, 0] += node[f'DikeIncrease {ss}']
                     node[f'dikeh_cum {s}'] += node[f'DikeIncrease {ss}']
-                
+
                 # Calculate dike heigheting costs:
                 if node[f'DikeIncrease {s}'] == 0:
                     node[f'dikecosts {s}'] = 0
@@ -140,7 +139,7 @@ class DikeNetwork(object):
                     # Note: kwargs[item] in this case can be either 0
                     # (no project) or 1 (yes project)
                     temporal_step = string2.split(' ')[1]
-                    
+
                     proj_node = G.nodes[f'RfR_projects {temporal_step}']
                     # Cost of RfR project
                     proj_node['cost'] += kwargs[item] * proj_node[string1][
@@ -156,7 +155,7 @@ class DikeNetwork(object):
                     # string1: dikename or EWS
                     # string2: name of uncertainty or lever
                     G.nodes[string1][string2] = kwargs[item]
-                    
+
         self.progressive_height_and_costs(G, dikelist, self.planning_steps)
 
         # Percentage of people who can be evacuated for a given warning
@@ -166,7 +165,7 @@ class DikeNetwork(object):
 
         # Dictionary storing outputs:
         data = {}
-        
+
         for s in self.planning_steps:
             for Qpeak in Qpeaks:
                 node = G.nodes['A.0']
@@ -282,13 +281,11 @@ class DikeNetwork(object):
 
                 data.update({f'{dike}_Expected Annual Damage {s}': disc_EAD,
                          f'{dike}_Expected Number of Deaths {s}': END,
-                         '{}_Dike Investment Costs {}'.format(dike,s
-                                              ): node[f'dikecosts {s}']})
+                         f'{dike}_Dike Investment Costs {s}': node[f'dikecosts {s}']})
 
             data.update({f'RfR Total Costs {s}': G.nodes[
-                                f'RfR_projects {s}']['cost'.format(s)]})
+                                f'RfR_projects {s}']['cost']})
             data.update({f'Expected Evacuation Costs {s}': np.sum(EECosts)})
-
 
         data = {k:float(v) for k, v in data.items()}
         return data

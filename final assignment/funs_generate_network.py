@@ -1,5 +1,3 @@
-from __future__ import division, unicode_literals, print_function
-
 import numpy as np
 import networkx as nx
 import pandas as pd
@@ -7,8 +5,7 @@ from funs_dikes import Lookuplin  # @UnresolvedImport
 
 
 def to_dict_dropna(data):
-    return dict((str(k), v.dropna().to_dict())
-                for k, v in data.iteritems())
+    return {str(k): v.dropna().to_dict() for k, v in data.iteritems()}
 
 
 def get_network(plann_steps_max=10):
@@ -39,13 +36,13 @@ def get_network(plann_steps_max=10):
 
     # Upload room for the river projects:
     steps = np.array(range(plann_steps_max))
-    
+
     projects = pd.read_excel('./data/rfr_strategies.xlsx', index_col=0,
                             names=['project name', 0, 1, 2, 3, 4])
-    
+
     for n in steps:
         a = to_dict_dropna(projects)
-        
+
         G.add_node(f'RfR_projects {n}', **a)
         G.nodes[f'RfR_projects {n}']['type'] = 'measure'
 
@@ -85,7 +82,7 @@ def get_network(plann_steps_max=10):
         G.nodes[dike]['C1'] = Muskingum_params.loc[G.nodes[dike]['prec_node'], 'C1']
         G.nodes[dike]['C2'] = Muskingum_params.loc[G.nodes[dike]['prec_node'], 'C2']
         G.nodes[dike]['C3'] = Muskingum_params.loc[G.nodes[dike]['prec_node'], 'C3']
-            
+
     # The plausible 133 upstream wave-shapes:
     G.nodes['A.0']['Qevents_shape'] = pd.read_excel(
         './data/hydrology/wave_shapes.xls', index_col=0)

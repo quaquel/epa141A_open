@@ -1,7 +1,3 @@
-from __future__ import (unicode_literals, print_function, absolute_import,
-                        division)
-
-
 from ema_workbench import (Model, MultiprocessingEvaluator,
                            ScalarOutcome, IntegerParameter, optimize, Scenario)
 from ema_workbench.em_framework.optimization import EpsilonProgress
@@ -50,5 +46,5 @@ if __name__ == '__main__':
     fig, ax1 = plt.subplots(ncols=1)
     ax1.plot(convergence.epsilon_progress)
     ax1.set_xlabel('nr. of generations')
-    ax1.set_ylabel('$\epsilon$ progress')
+    ax1.set_ylabel(r'$\epsilon$ progress')
     sns.despine()
