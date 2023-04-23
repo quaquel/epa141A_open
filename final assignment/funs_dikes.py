@@ -6,16 +6,17 @@ Created on Thu Jul 06 14:51:04 2017
 import numpy as np
 
 
-def dikefailure(sb, inflow, hriver, hbas, hground, status_t1,
-                Bmax, Brate, simtime, tbreach, critWL):
-    ''' Function establising dike failure as well as flow balance between the
-        river and the polder
+def dikefailure(
+    sb, inflow, hriver, hbas, hground, status_t1, Bmax, Brate, simtime, tbreach, critWL
+):
+    """Function establising dike failure as well as flow balance between the
+    river and the polder
 
-         inflow = flow coming into the node
-         status = if False the dike has not failed yet
-         critWL = water level above which we have failure
+     inflow = flow coming into the node
+     status = if False the dike has not failed yet
+     critWL = water level above which we have failure
 
-    '''
+    """
     tbr = tbreach
     #    h1 = hriver - hbreach
     #    h2 = (hbas + hground) - hbreach
@@ -28,7 +29,7 @@ def dikefailure(sb, inflow, hriver, hbas, hground, status_t1,
         B = Bmax * (1 - np.exp(-Brate * (simtime - tbreach)))
 
         if h1 > 0:
-            breachflow = 1.7 * B * (h1)**1.5
+            breachflow = 1.7 * B * (h1) ** 1.5
 
         # h1 <0 ==> no flow:
         else:
@@ -58,7 +59,7 @@ def dikefailure(sb, inflow, hriver, hbas, hground, status_t1,
 
 
 def Lookuplin(MyFile, inputcol, searchcol, inputvalue):
-    ''' Linear lookup function '''
+    """Linear lookup function"""
     return np.interp(inputvalue, MyFile[:, inputcol], MyFile[:, searchcol])
 
 
